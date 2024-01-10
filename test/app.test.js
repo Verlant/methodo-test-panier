@@ -102,4 +102,49 @@ describe('Testing the Panier Functions', function() {
         expect(panier.emptyPanier()).to.equal(panier.articles);
         done();
     });
+
+    it('6. Modification du prix total du panier', function(done) {
+        let panier = new Panier();
+        let article1 = new Article("article1", 10.00);
+        let article2 = new Article("article2", 10.00);
+        let article3 = new Article("article3", 10.00);
+        let article4 = new Article("article4", 10.00);
+        let article5 = new Article("article5", 10.00);
+        panier.addArticle(article1);
+        expect(panier.getTotalPricePanier()).to.equal(10);
+        panier.addArticle(article2);
+        expect(panier.getTotalPricePanier()).to.equal(20);
+        panier.addArticle(article3);
+        expect(panier.getTotalPricePanier()).to.equal(30);
+        panier.addArticle(article4);
+        expect(panier.getTotalPricePanier()).to.equal(40);
+        panier.addArticle(article5);
+        expect(panier.getTotalPricePanier()).to.equal(50);
+        panier.deleteArticle(article1);
+        expect(panier.getTotalPricePanier()).to.equal(40);
+        panier.deleteArticle(article2);
+        expect(panier.getTotalPricePanier()).to.equal(30);
+        panier.deleteArticle(article3);
+        expect(panier.getTotalPricePanier()).to.equal(20);
+        panier.deleteArticle(article4);
+        expect(panier.getTotalPricePanier()).to.equal(10);
+        panier.deleteArticle(article5);
+        expect(panier.getTotalPricePanier()).to.equal(0);
+        done();
+    });
+
+    it('7. Test remise', function(done) {
+        let panier = new Panier();
+        let article1 = new Article("article1", 10.00);
+        let article2 = new Article("article2", 10.00);
+        let article3 = new Article("article3", 10.00);
+        let article4 = new Article("article4", 10.00);
+        let article5 = new Article("article5", 10.00);
+        panier.addArticle(article1);
+        panier.addArticle(article2);
+        panier.addArticle(article3);
+        panier.addArticle(article4);
+        panier.addArticle(article5);
+        done();
+    });
 });
