@@ -44,14 +44,24 @@ class Panier {
     }
 
     setRemise(remise) {
+        let error = false;
+        let message;
         if (typeof remise !== 'number' || remise < 0 || remise > 100) {
-            return "La remise doit être un nombre entier compris entre 0 et 100";
-        } else if (typeof remise === 'number') {
-            this.remise = remise;
-            this.setTotalPrice(this.totalPrice * (1 - remise / 100));
-        } else {
-            return "Une erreure est survenue.";
+            error = true;
+            message = "La remise doit être un nombre entier compris entre 0 et 100";
+        } else if (this.articles.length === 0) {
+            error = true;
+            message = "Le panier est vide !";
+        } else if (this.totalPrice <= 0) {
+            error = true;
+            message = "Le total du panier est égal à 0.";
         }
+        if (error) {
+            return message;
+        }
+        this.remise = remise;
+        this.setTotalPrice(this.totalPrice * (1 - remise / 100));
+        return this.remise;
     }
 }
 

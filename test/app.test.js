@@ -1,6 +1,7 @@
 // const Cube = require('../src/app').Cube;
 const Article = require('../src/article').Article;
 const Panier = require('../src/panier').Panier;
+const Coupon = require('../src/coupon').Coupon;
 const expect = require('chai').expect;
 
 // describe('Testing the Cube Functions', function() {
@@ -133,7 +134,7 @@ describe('Testing the Panier Functions', function() {
         done();
     });
 
-    it('7. Test remise', function(done) {
+    it('7. Test remise est de type int', function(done) {
         let panier = new Panier();
         let article1 = new Article("article1", 10.00);
         let article2 = new Article("article2", 10.00);
@@ -145,6 +146,72 @@ describe('Testing the Panier Functions', function() {
         panier.addArticle(article3);
         panier.addArticle(article4);
         panier.addArticle(article5);
+        panier.setRemise(10);
+        expect(Number.isInteger(panier.remise)).to.equal(true);
         done();
+    });
+
+    it('8. Test panier ne doit pas etre vide', function(done) {
+        let panier = new Panier();
+        let article1 = new Article("article1", 10.00);
+        let article2 = new Article("article2", 10.00);
+        let article3 = new Article("article3", 10.00);
+        let article4 = new Article("article4", 10.00);
+        let article5 = new Article("article5", 10.00);
+        expect(panier.setRemise(10)).to.equal("Le panier est vide !");
+        panier.addArticle(article1);
+        panier.addArticle(article2);
+        panier.addArticle(article3);
+        panier.addArticle(article4);
+        panier.addArticle(article5);
+        expect(panier.setRemise(10)).to.equal(panier.remise);
+        done();
+    });
+
+    it('9. Test montant panier doit être supérieur à 0', function(done) {
+        // let panier = new Panier();
+        // let article1 = new Article("article1", 10.00);
+        // let article2 = new Article("article2", 10.00);
+        // let article3 = new Article("article3", 10.00);
+        // let article4 = new Article("article4", 10.00);
+        // let article5 = new Article("article5", 10.00);
+        // expect(panier.setRemise(10)).to.equal("Le panier est vide !");
+        // panier.addArticle(article1);
+        // panier.addArticle(article2);
+        // panier.addArticle(article3);
+        // panier.addArticle(article4);
+        // panier.addArticle(article5);
+        // expect(panier.setRemise(10)).to.equal(panier.remise);
+        done();
+    });
+
+    it('80. Test coupon existe', function(done) {
+        let couponExiste = false;
+        let coupon = new Coupon(Math.floor(Math.random() * 100));
+        if (coupon) {
+            couponExiste = true;
+        }
+        expect(couponExiste).to.equal(true);
+        done();
+    });
+
+    it('90. Test coupon valide', function(done) {
+        let couponValide = false;
+        let coupon = new Coupon(Math.floor(Math.random() * 100), new Date(), 1);
+        if (coupon.dateLimite <= new Date() && coupon.utilisationsRestante > 0) {
+            couponValide = true;
+        }
+        expect(couponValide).to.equal(true);
+        done();
+    });
+
+    it('100. Test montant total du panier supérieur à 55', function(done) {
+        // let couponValide = false;
+        // let coupon = new Coupon(Math.floor(Math.random() * 100), new Date(), 1);
+        // if (coupon.dateLimite <= new Date() && coupon.utilisationsRestante > 0) {
+        //     couponValide = true;
+        // }
+        // expect(couponValide).to.equal(true);
+        // done();
     });
 });
